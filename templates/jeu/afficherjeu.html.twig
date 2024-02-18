@@ -1,0 +1,152 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<h1>List jeux</h1>
+
+
+{% block stylesheets %}
+    <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/templatemo-cyborg-gaming.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/owl.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}">
+
+    <style>
+
+    table, td, th 
+    {
+        border: 1px solid;
+    }
+
+    table 
+    {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+
+        /* Your custom CSS styles go here */
+        /* Set background to black with 90% opacity */
+        body {
+background: rgb(144,87,175);
+background: radial-gradient(circle, rgba(144,87,175,1) 0%, rgba(200,64,153,1) 49%, rgba(40,17,41,1) 75%, rgba(0,0,0,1) 100%);
+            color: white; /* Text color */
+            font-family: Arial, sans-serif;
+        }
+
+        /* Main container */
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 10px; /* Reduced padding */
+            border: 2px solid #ccc; /* Grey border */
+            border-radius: 10px;
+        }
+
+        /* Header styles */
+        header {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        /* Form styles */
+        form {
+            margin-top: 20px;
+            background-color: #ccc; /* Grey background */
+            padding: 10px; /* Reduced padding */
+            border-radius: 10px;
+            text-align: center; /* Center the form horizontally */
+        }
+
+        /* Form field styles */
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: black; /* Text color */
+        }
+
+        input[type="text"],
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Submit button styles */
+        .button {
+            background-color: #04AA6D; /* Green */
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+
+        .button5 {
+            background-color: white;
+            color: black;
+            border: 2px solid #555555;
+            border-radius: 12px;
+        }
+
+        .button5:hover {
+            background-color: #555555;
+            color: white;
+        }
+        
+    </style>
+{% endblock %}
+
+
+
+
+
+<table border="1">
+    <tr>
+        <th>id</th>
+        <th>nom_jeu</th>
+        <th>description_jeu</th>
+    {#  <th>genre</th>   #}
+        <th>date_de_sortie</th>
+        <th>images</th>
+        <th>Actions</th>
+    </tr>
+    <tbody>
+        {% for jeu in jeux %}
+            <tr>
+                <td>{{ jeu.id }}</td>
+                <td>{{ jeu.nomJeu }}</td> <!-- Modifier ici -->
+                <td>{{ jeu.descriptionJeu }}</td>
+           {#      <td>{{ jeu.genre }}</td>          #}
+                <td>{{ jeu.dateDeSortie ? jeu.dateDeSortie|date('Y-m-d H:i:s') }}</td>
+                <td><img src="{{ asset('uploads/' ~ jeu.images) }}" alt="Image" width="700" height="500"></td>
+                <td>
+                    <a href="{{ path('delete_jeu', {'id': jeu.id}) }}" class="button button5">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    <a href="{{ path('addjeu')}}" class="button button5">Add</a>
+</table>
+
+
+
+        
+</body>
+
+</html>

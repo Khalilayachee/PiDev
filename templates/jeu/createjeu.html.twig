@@ -1,0 +1,108 @@
+
+{{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+{% block form %}
+                      {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+
+                          {{ form_row(form.nom_jeu,{'attr': {'class': 'form-control mb-3'}}) }}
+                          {{ form_row(form.description_jeu,{'attr': {'class': 'form-control mb-3'}})}}
+                      
+                          {{ form_row(form.date_de_sortie,{'attr': {'class': 'form-control mb-3'}}) }}
+                         {#  {{ form_row(form.genre,{'attr': {'class': 'form-control mb-3'}})}}  #} 
+                           {{ form_row(form.images, {'label': 'Fichier', 'attr': {'class': 'form-control mb-3'}}) }}
+
+                           {{ form_row(form.ajouter,{'attr': {'class': 'main-border-button'}})}}
+     
+                      {{ form_end(form) }}
+                      {% endblock %}
+{% block stylesheets %}
+    <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/templatemo-cyborg-gaming.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/owl.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}">
+
+    <style>
+        /* Your custom CSS styles go here */
+        /* Set background to black with 90% opacity */
+        body {
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white; /* Text color */
+            font-family: Arial, sans-serif;
+        }
+
+        /* Main container */
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 10px; /* Reduced padding */
+            border: 2px solid #ccc; /* Grey border */
+            border-radius: 10px;
+        }
+
+        /* Header styles */
+        header {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        /* Form styles */
+        form {
+            margin-top: 20px;
+            background-color: #ccc; /* Grey background */
+            padding: 10px; /* Reduced padding */
+            border-radius: 10px;
+            text-align: center; /* Center the form horizontally */
+        }
+
+        /* Form field styles */
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: black; /* Text color */
+        }
+
+        input[type="text"],
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Submit button styles */
+        .button {
+            background-color: #04AA6D; /* Green */
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+
+        .button5 {
+            background-color: white;
+            color: black;
+            border: 2px solid #555555;
+            border-radius: 12px;
+        }
+
+        .button5:hover {
+            background-color: #555555;
+            color: white;
+        }
+
+        /* Messages d'erreur */
+        .error-message {
+            color: red;
+        }
+        
+
+        
+    </style>
+{% endblock %}

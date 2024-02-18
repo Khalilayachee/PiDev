@@ -1,0 +1,6 @@
+app_tic_tac_toe:
+    path: /tic-tac-toe
+    controller: App\Controller\TicTacToeController::index
+edit_jeu:
+    path: /edit/{id}
+    controller: 'App\Controller\JeuController::editJeu'

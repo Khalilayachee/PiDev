@@ -1,0 +1,31 @@
+{% extends 'base2.html.twig' %}
+{% block body %}
+    
+                 <div class="login-form-bg h-100">
+        <div class="container h-100">
+            <div class="row justify-content-center h-100">
+                <div class="col-xl-6">
+                    <div class="form-input-content">
+                        <div class="card login-form mb-0">
+                            <div class="card-body pt-5">
+                                <a class="text-center" href="index.html"> <h4>Rosella</h4></a>
+        
+                               {% block form %}
+            {{ form_start(form, {attr: {novalidate: 'novalidate'}}) }}
+            
+
+                {{ form_row(form.nom_categorie, {'attr': {'class': 'form-control','data-error-class': 'error-message'}, 'label_attr': {'style': 'color: white'}}) }}
+                {{ form_row(form.description_categorie, {'attr': {'class': 'form-control','data-error-class': 'error-message'}, 'label_attr': {'style': 'color: white'}}) }}
+
+                 {{ form_row(form.save,{'attr': {'class': 'btn login-form__btn submit w-100'}})}}
+            {{ form_end(form) }}
+                            {% endblock %}                    
+                                <p class="mt-5 login-form__footer">Dont have account? <a href="page-register.html" class="text-primary">Sign Up</a> now</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

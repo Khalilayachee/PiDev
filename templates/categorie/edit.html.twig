@@ -1,0 +1,17 @@
+
+
+{% block title %}Edit Categorie{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="page-content">
+    <h1>Edit Categorie</h1>
+
+    {{ include('categorie/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_categorie_index') }}">back to list</a>
+
+    {{ include('categorie/_delete_form.html.twig') }} </div></div></div></div>
+{% endblock %}
