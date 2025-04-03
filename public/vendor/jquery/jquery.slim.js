@@ -6814,6 +6814,13 @@ jQuery.extend( {
 
 // Hooks for boolean attributes
 boolHook = {
+	/**
+	 * Sets or removes a boolean attribute on an element.
+	 * @param {HTMLElement} elem - The element to modify.
+	 * @param {boolean} value - The value to set. If false, the attribute will be removed.
+	 * @param {string} name - The name of the attribute to set or remove.
+	 * @returns {string} The name of the attribute that was set or removed.
+	 */
 	set: function( elem, value, name ) {
 		if ( value === false ) {
 
@@ -6854,10 +6861,21 @@ var rfocusable = /^(?:input|select|textarea|button)$/i,
 	rclickable = /^(?:a|area)$/i;
 
 jQuery.fn.extend( {
+	/**
+	 * Sets or gets a property for the specified element.
+	 * @param {string} name - The name of the property to set or get.
+	 * @param {*} [value] - The value to set for the property. If omitted, acts as a getter.
+	 * @returns {*} The value of the property if getting, or the jQuery object if setting.
+	 */
 	prop: function( name, value ) {
 		return access( this, jQuery.prop, name, value, arguments.length > 1 );
 	},
 
+	/**
+	 * Removes a property for each element in the set of matched elements.
+	 * @param {string} name - The name of the property to remove.
+	 * @returns {jQuery} The jQuery object for chaining.
+	 */
 	removeProp: function( name ) {
 		return this.each( function() {
 			delete this[ jQuery.propFix[ name ] || name ];
@@ -6866,6 +6884,13 @@ jQuery.fn.extend( {
 } );
 
 jQuery.extend( {
+	/**
+	 * Sets or gets a property value on a DOM element.
+	 * @param {Object} elem - The DOM element to manipulate.
+	 * @param {string} name - The name of the property to set or get.
+	 * @param {*} [value] - The value to set for the property. If undefined, acts as a getter.
+	 * @returns {*} The value of the property if getting, the return value of the setter hook if available, or undefined.
+	 */
 	prop: function( elem, name, value ) {
 		var ret, hooks,
 			nType = elem.nodeType;
@@ -6900,6 +6925,12 @@ jQuery.extend( {
 
 	propHooks: {
 		tabIndex: {
+			/**
+			 * Retrieves the tabindex value for a given element.
+			 * @param {HTMLElement} elem - The element to check for tabindex.
+			 * @returns {number} The tabindex value. Returns the parsed integer value if explicitly set,
+			 *                   0 for naturally focusable elements, or -1 if the element is not focusable.
+			 */
 			get: function( elem ) {
 
 				// Support: IE <=9 - 11 only
@@ -6942,6 +6973,11 @@ jQuery.extend( {
 // since it considers such accessions noop
 if ( !support.optSelected ) {
 	jQuery.propHooks.selected = {
+		/**
+		 * Retrieves a value from an element's parent node, triggering a side effect.
+		 * @param {HTMLElement} elem - The element whose parent node is to be accessed.
+		 * @returns {null} This function always returns null.
+		 */
 		get: function( elem ) {
 
 			/* eslint no-unused-expressions: "off" */
@@ -6994,10 +7030,20 @@ jQuery.each( [
 	}
 
 
+/**
+ * Retrieves the class attribute of a given element.
+ * @param {Element} elem - The DOM element to get the class from.
+ * @returns {string} The value of the class attribute or an empty string if not present.
+ */
 function getClass( elem ) {
 	return elem.getAttribute && elem.getAttribute( "class" ) || "";
 }
 
+/**
+ * Converts a value to an array of classes
+ * @param {Array|string} value - The value to convert
+ * @returns {Array} An array of classes
+ */
 function classesToArray( value ) {
 	if ( Array.isArray( value ) ) {
 		return value;
@@ -7009,6 +7055,11 @@ function classesToArray( value ) {
 }
 
 jQuery.fn.extend( {
+	/**
+	 * Adds one or more classes to each element in the set of matched elements.
+	 * @param {string|function} value - A string of one or more space-separated classes to be added, or a function that returns such a string.
+	 * @returns {jQuery} The jQuery object for chaining.
+	 */
 	addClass: function( value ) {
 		var classes, elem, cur, curValue, clazz, j, finalValue,
 			i = 0;
@@ -7046,6 +7097,11 @@ jQuery.fn.extend( {
 		return this;
 	},
 
+	/**
+	 * Removes one or more classes from each element in the set of matched elements.
+	 * @param {string|function} value - A string of space-separated classes to be removed, or a function that returns such a string.
+	 * @returns {jQuery} The jQuery object for chaining.
+	 */
 	removeClass: function( value ) {
 		var classes, elem, cur, curValue, clazz, j, finalValue,
 			i = 0;
@@ -7091,6 +7147,12 @@ jQuery.fn.extend( {
 		return this;
 	},
 
+	/**
+	 * Toggles one or more classes on the selected elements.
+	 * @param {string|Array|Function} value - The class name(s) to toggle. Can be a space-separated string, an array of class names, or a function that returns class name(s).
+	 * @param {boolean} [stateVal] - A boolean value to determine whether the class should be added or removed.
+	 * @returns {jQuery} The jQuery object for chaining.
+	 */
 	toggleClass: function( value, stateVal ) {
 		var type = typeof value,
 			isValidValue = type === "string" || Array.isArray( value );
@@ -7152,6 +7214,11 @@ jQuery.fn.extend( {
 		} );
 	},
 
+	/**
+	 * Checks if any element in the set of matched elements has the given class.
+	 * @param {string} selector - The class name to search for.
+	 * @returns {boolean} True if any element has the class, false otherwise.
+	 */
 	hasClass: function( selector ) {
 		var className, elem,
 			i = 0;
@@ -7174,6 +7241,11 @@ jQuery.fn.extend( {
 var rreturn = /\r/g;
 
 jQuery.fn.extend( {
+	/**
+	 * Get or set the value of form elements.
+	 * @param {string|number|Array|Function} [value] - The value to set. If omitted, returns the current value.
+	 * @returns {string|number|Array|jQuery} The current value if getting, or the jQuery object if setting.
+	 */
 	val: function( value ) {
 		var hooks, ret, valueIsFunction,
 			elem = this[ 0 ];
@@ -7245,6 +7317,12 @@ jQuery.fn.extend( {
 jQuery.extend( {
 	valHooks: {
 		option: {
+			/**
+			 * Retrieves the value of an element, prioritizing the 'value' attribute if present.
+			 * For options without a 'value' attribute, falls back to the text content.
+			 * @param {Element} elem - The DOM element to get the value from
+			 * @returns {string|null} The value of the element or null if not found
+			 */
 			get: function( elem ) {
 
 				var val = jQuery.find.attr( elem, "value" );
@@ -7259,6 +7337,11 @@ jQuery.extend( {
 			}
 		},
 		select: {
+			/**
+			 * Retrieves the selected value(s) from a select element.
+			 * @param {HTMLSelectElement} elem - The select element to get values from.
+			 * @returns {string|Array<string>} The selected value for single-select elements, or an array of selected values for multi-select elements.
+			 */
 			get: function( elem ) {
 				var value, option, i,
 					options = elem.options,
@@ -7303,6 +7386,12 @@ jQuery.extend( {
 				return values;
 			},
 
+			/**
+			 * Sets the selected option(s) of a select element
+			 * @param {HTMLSelectElement} elem - The select element to modify
+			 * @param {Array|string} value - The value(s) to set as selected
+			 * @returns {Array} The array of values that were set
+			 */
 			set: function( elem, value ) {
 				var optionSet, option,
 					options = elem.options,
@@ -7336,6 +7425,12 @@ jQuery.extend( {
 // Radios and checkboxes getter/setter
 jQuery.each( [ "radio", "checkbox" ], function() {
 	jQuery.valHooks[ this ] = {
+		/**
+		 * Sets the checked property of a checkbox or radio button element based on its value's presence in an array.
+		 * @param {HTMLElement} elem - The checkbox or radio button element to set.
+		 * @param {Array} value - The array to check against for the element's value.
+		 * @returns {boolean} True if the element's value is in the array, false otherwise.
+		 */
 		set: function( elem, value ) {
 			if ( Array.isArray( value ) ) {
 				return ( elem.checked = jQuery.inArray( jQuery( elem ).val(), value ) > -1 );
@@ -7343,6 +7438,11 @@ jQuery.each( [ "radio", "checkbox" ], function() {
 		}
 	};
 	if ( !support.checkOn ) {
+		/**
+		 * Gets the value of a checkbox or radio button element.
+		 * @param {HTMLElement} elem - The checkbox or radio button element.
+		 * @returns {string} The value of the element. Returns "on" if the value attribute is null, otherwise returns the element's value.
+		 */
 		jQuery.valHooks[ this ].get = function( elem ) {
 			return elem.getAttribute( "value" ) === null ? "on" : elem.value;
 		};
@@ -7365,6 +7465,17 @@ var rfocusMorph = /^(?:focusinfocus|focusoutblur)$/,
 
 jQuery.extend( jQuery.event, {
 
+	/**
+	 * Triggers an event on the specified element and its ancestors in the DOM tree.
+	 * This method handles both native and custom events, supports namespaced events,
+	 * and manages event bubbling and default behaviors.
+	 *
+	 * @param {Object|String} event - The event object or event type string to trigger
+	 * @param {Array|Object} data - Additional data to pass to the event handlers
+	 * @param {Element} elem - The DOM element on which to trigger the event
+	 * @param {Boolean} onlyHandlers - If true, only trigger handlers without bubbling or default behavior
+	 * @returns {*} The value returned by the last handler, or undefined if no handlers were triggered
+	 */
 	trigger: function( event, data, elem, onlyHandlers ) {
 
 		var i, cur, tmp, bubbleType, ontype, handle, special, lastElement,
@@ -7529,6 +7640,12 @@ jQuery.extend( jQuery.event, {
 
 jQuery.fn.extend( {
 
+	/**
+	 * Triggers a custom event on each element in the set of matched elements.
+	 * @param {string} type - The type of event to trigger.
+	 * @param {*} [data] - Additional data to pass along to the event handler as event.data.
+	 * @returns {jQuery} The jQuery object, allowing for chaining of method calls.
+	 */
 	trigger: function( type, data ) {
 		return this.each( function() {
 			jQuery.event.trigger( type, data, this );
@@ -7552,6 +7669,14 @@ jQuery.fn.extend( {
 // which is spec violation - http://www.w3.org/TR/DOM-Level-3-Events/#events-focusevent-event-order
 // Related ticket - https://bugs.chromium.org/p/chromium/issues/detail?id=449857
 if ( !support.focusin ) {
+	/**
+	 * Attaches event handlers for focus and blur events with improved cross-browser compatibility.
+	 * This method creates special event handlers for 'focusin' and 'focusout' events,
+	 * which are more reliable than the standard 'focus' and 'blur' events in some browsers.
+	 * @param {Object} eventMap - An object mapping original event names to fixed event names.
+	 * @param {Function} callback - A function to be executed for each event type in the map.
+	 * @returns {undefined} This method does not return a value.
+	 */
 	jQuery.each( { focus: "focusin", blur: "focusout" }, function( orig, fix ) {
 
 		// Attach a single capturing handler on the document while someone wants focusin/focusout
@@ -7592,6 +7717,15 @@ var
 	rsubmitterTypes = /^(?:submit|button|image|reset|file)$/i,
 	rsubmittable = /^(?:input|select|textarea|keygen)/i;
 
+/**
+ * Builds a serialized representation of an object or array for use in URL parameters.
+ * This function recursively processes the input, handling both arrays and objects.
+ * @param {string} prefix - The prefix to use for the current parameter being built
+ * @param {*} obj - The object or array to be serialized
+ * @param {boolean} traditional - If true, the function will use a more traditional serialization approach
+ * @param {Function} add - A callback function to add the serialized parameter
+ * @returns {undefined} This function does not return a value, it uses the add callback to build the serialized string
+ */
 function buildParams( prefix, obj, traditional, add ) {
 	var name;
 
@@ -7635,6 +7769,12 @@ function buildParams( prefix, obj, traditional, add ) {
 jQuery.param = function( a, traditional ) {
 	var prefix,
 		s = [],
+		/**
+		 * Adds a key-value pair to the serialized representation of a data structure.
+		 * @param {string} key - The key to be added to the serialized representation.
+		 * @param {*} valueOrFunction - The value to be associated with the key. Can be a value of any type or a function that returns a value.
+		 * @returns {undefined} This method does not return a value.
+		 */
 		add = function( key, valueOrFunction ) {
 
 			// If value is a function, invoke it and use its return value
@@ -7668,6 +7808,10 @@ jQuery.param = function( a, traditional ) {
 };
 
 jQuery.fn.extend( {
+	/**
+	 * Serializes the form data into a URL-encoded string.
+	 * @returns {string} A URL-encoded string representing the form data.
+	 */
 	serialize: function() {
 		return jQuery.param( this.serializeArray() );
 	},
@@ -7706,6 +7850,11 @@ jQuery.fn.extend( {
 
 
 jQuery.fn.extend( {
+	/**
+	 * Wraps HTML structure around each element in the set of matched elements.
+	 * @param {string|Function} html - An HTML snippet or function that returns an HTML snippet to wrap around the matched elements.
+	 * @returns {jQuery} The original set of elements for chaining purposes.
+	 */
 	wrapAll: function( html ) {
 		var wrap;
 
@@ -7735,6 +7884,11 @@ jQuery.fn.extend( {
 		return this;
 	},
 
+	/**
+	 * Wraps HTML structure around the content of each element in the set of matched elements.
+	 * @param {string|Function} html - The HTML structure to wrap around the content, or a function that returns such HTML.
+	 * @returns {jQuery} The original jQuery object for chaining.
+	 */
 	wrapInner: function( html ) {
 		if ( isFunction( html ) ) {
 			return this.each( function( i ) {
@@ -7755,6 +7909,11 @@ jQuery.fn.extend( {
 		} );
 	},
 
+	/**
+	 * Wraps HTML structure around each element in the set of matched elements.
+	 * @param {string|Function} html - The HTML structure to wrap around the elements. If a function is provided, it will be called for each element in the set, and should return the HTML content to wrap that element.
+	 * @returns {jQuery} The original set of elements for chaining purposes.
+	 */
 	wrap: function( html ) {
 		var htmlIsFunction = isFunction( html );
 
@@ -7763,6 +7922,11 @@ jQuery.fn.extend( {
 		} );
 	},
 
+	/**
+	 * Unwraps the set of matched elements by replacing each element with its child nodes.
+	 * @param {string|Element|jQuery} selector - A selector, element, or jQuery object specifying which elements to unwrap.
+	 * @returns {jQuery} The original jQuery object for chaining.
+	 */
 	unwrap: function( selector ) {
 		this.parent( selector ).not( "body" ).each( function() {
 			jQuery( this ).replaceWith( this.childNodes );
@@ -7772,6 +7936,11 @@ jQuery.fn.extend( {
 } );
 
 
+/**
+ * Checks if an element is hidden.
+ * @param {Element} elem - The DOM element to check.
+ * @returns {boolean} True if the element is hidden, false otherwise.
+ */
 jQuery.expr.pseudos.hidden = function( elem ) {
 	return !jQuery.expr.pseudos.visible( elem );
 };
@@ -7846,6 +8015,13 @@ jQuery.parseHTML = function( data, context, keepScripts ) {
 
 
 jQuery.offset = {
+	/**
+	 * Sets the offset of an element relative to its current position.
+	 * @param {Element} elem - The DOM element to set the offset for.
+	 * @param {Object|Function} options - An object containing top and left properties for new offset or a function returning such an object.
+	 * @param {number} i - The index of the element in the set.
+	 * @returns {undefined} This method does not return a value.
+	 */
 	setOffset: function( elem, options, i ) {
 		var curPosition, curLeft, curCSSTop, curTop, curOffset, curCSSLeft, calculatePosition,
 			position = jQuery.css( elem, "position" ),
@@ -7992,6 +8168,11 @@ jQuery.fn.extend( {
 	//
 	// This logic, however, is not guaranteed and can change at any point in the future
 	offsetParent: function() {
+		/**
+		 * Finds the closest positioned offsetParent for each element in the set of matched elements.
+		 * @returns {jQuery} A new jQuery object containing the closest positioned offsetParent for each element.
+		 *                   Returns the document element if no positioned offsetParent is found.
+		 */
 		return this.map( function() {
 			var offsetParent = this.offsetParent;
 
@@ -8008,6 +8189,11 @@ jQuery.fn.extend( {
 jQuery.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( method, prop ) {
 	var top = "pageYOffset" === prop;
 
+	/**
+	 * Sets or gets the scroll position of an element or window.
+	 * @param {number|undefined} val - The value to set for the scroll position. If undefined, the method returns the current scroll position.
+	 * @returns {number|jQuery} If getting, returns the current scroll position. If setting, returns the jQuery object for chaining.
+	 */
 	jQuery.fn[ method ] = function( val ) {
 		return access( this, function( elem, method, val ) {
 
@@ -8044,6 +8230,13 @@ jQuery.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
 // rather than make the css module depend on the offset module, just check for it here
 jQuery.each( [ "top", "left" ], function( i, prop ) {
 	jQuery.cssHooks[ prop ] = addGetHookIf( support.pixelPosition,
+		/**
+		 * Calculates the position of an element in pixels for a specified property.
+		 * @param {Object} elem - The DOM element to calculate the position for.
+		 * @param {String} computed - The computed style value for the specified property.
+		 * @param {String} prop - The CSS property to calculate the position for (implicitly passed).
+		 * @returns {String} The calculated position in pixels, or the original computed value if not a percentage.
+		 */
 		function( elem, computed ) {
 			if ( computed ) {
 				computed = curCSS( elem, prop );
@@ -8061,6 +8254,12 @@ jQuery.each( [ "top", "left" ], function( i, prop ) {
 // Create innerHeight, innerWidth, height, width, outerHeight and outerWidth methods
 jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
 	jQuery.each( { padding: "inner" + name, content: type, "": "outer" + name },
+		/**
+		 * Creates a new jQuery method for getting or setting dimensions of an element
+		 * @param {boolean|Object} defaultExtra - The default extra parameter for the dimension calculation
+		 * @param {string} funcName - The name of the function to be created
+		 * @returns {Function} A new jQuery method that can get or set element dimensions
+		 */
 		function( defaultExtra, funcName ) {
 
 		// Margin is only for outerHeight, outerWidth
@@ -8108,6 +8307,14 @@ jQuery.each( { Height: "height", Width: "width" }, function( name, type ) {
 jQuery.each( ( "blur focus focusin focusout resize scroll click dblclick " +
 	"mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
 	"change select submit keydown keypress keyup contextmenu" ).split( " " ),
+	/**
+	 * Creates an event handler function for a specified event name.
+	 * This method is used internally by jQuery to create event handler functions
+	 * for various event types.
+	 * @param {number} i - Index or identifier (not used in the function body)
+	 * @param {string} name - The name of the event to create a handler for
+	 * @returns {Function} A function that can be used to bind or trigger the specified event
+	 */
 	function( i, name ) {
 
 	// Handle event binding
@@ -8119,6 +8326,12 @@ jQuery.each( ( "blur focus focusin focusout resize scroll click dblclick " +
 } );
 
 jQuery.fn.extend( {
+	/**
+	 * Attaches handlers for both mouseenter and mouseleave events.
+	 * @param {Function} fnOver - The function to be executed when the mouse enters the element.
+	 * @param {Function} [fnOut] - The function to be executed when the mouse leaves the element. If not provided, fnOver will be used for both enter and leave events.
+	 * @returns {jQuery} The jQuery object for chaining.
+	 */
 	hover: function( fnOver, fnOut ) {
 		return this.mouseenter( fnOver ).mouseleave( fnOut || fnOver );
 	}
@@ -8129,6 +8342,14 @@ jQuery.fn.extend( {
 
 jQuery.fn.extend( {
 
+	/**
+	 * Binds an event handler to the specified event type(s) for the element.
+	 * This is a shorthand method for .on( types, null, data, fn ).
+	 * @param {string} types - A string containing one or more space-separated event types.
+	 * @param {*} [data] - Additional data to be passed to the handler function when the event is triggered.
+	 * @param {Function} fn - The function to be executed when the event is triggered.
+	 * @returns {Object} The current jQuery object for chaining.
+	 */
 	bind: function( types, data, fn ) {
 		return this.on( types, null, data, fn );
 	},
@@ -8136,6 +8357,14 @@ jQuery.fn.extend( {
 		return this.off( types, null, fn );
 	},
 
+	/**
+	 * Attaches a handler to an event for the elements.
+	 * @param {string} selector - A selector to filter the elements that trigger the event.
+	 * @param {string} types - One or more space-separated event types and optional namespaces.
+	 * @param {*} [data] - Data to be passed to the handler in event.data when an event is triggered.
+	 * @param {function} fn - A function to execute when the event is triggered.
+	 * @returns {Object} The current jQuery object for chaining.
+	 */
 	delegate: function( selector, types, data, fn ) {
 		return this.on( types, selector, data, fn );
 	},
@@ -8169,6 +8398,13 @@ jQuery.proxy = function( fn, context ) {
 
 	// Simulated bind
 	args = slice.call( arguments, 2 );
+	/**
+	 * Creates a proxy function that applies the original function with a specific context and additional arguments.
+	 * @param {Function} fn - The original function to be proxied.
+	 * @param {Object} context - The context (this value) to be used when calling the original function.
+	 * @param {Array} args - An array of arguments to be prepended to the arguments passed to the proxy function.
+	 * @returns {Function} A new function that, when called, invokes the original function with the specified context and combined arguments.
+	 */
 	proxy = function() {
 		return fn.apply( context || this, args.concat( slice.call( arguments ) ) );
 	};
@@ -8179,6 +8415,11 @@ jQuery.proxy = function( fn, context ) {
 	return proxy;
 };
 
+/**
+ * Controls the jQuery ready event execution.
+ * @param {boolean} hold - If true, increments the ready wait counter. If false, triggers the ready event.
+ * @returns {undefined} This method does not return a value.
+ */
 jQuery.holdReady = function( hold ) {
 	if ( hold ) {
 		jQuery.readyWait++;
@@ -8196,6 +8437,11 @@ jQuery.type = toType;
 
 jQuery.now = Date.now;
 
+/**
+ * Checks if a given value is numeric.
+ * @param {*} obj - The value to be checked for being numeric.
+ * @returns {boolean} Returns true if the value is numeric, false otherwise.
+ */
 jQuery.isNumeric = function( obj ) {
 
 	// As of jQuery 3.0, isNumeric is limited to
@@ -8243,6 +8489,11 @@ var
 	// Map over the $ in case of overwrite
 	_$ = window.$;
 
+/**
+ * Relinquishes jQuery's control of the $ variable.
+ * @param {boolean} deep - If true, also relinquishes jQuery's control of the jQuery variable.
+ * @returns {Object} The jQuery object.
+ */
 jQuery.noConflict = function( deep ) {
 	if ( window.$ === jQuery ) {
 		window.$ = _$;
