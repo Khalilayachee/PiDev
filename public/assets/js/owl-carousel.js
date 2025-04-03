@@ -24,6 +24,16 @@
 	 * @param {HTMLElement|jQuery} element - The element to create the carousel for.
 	 * @param {Object} [options] - The options
 	 */
+	/**
+	 * Helper function to safely escape RegExp special characters
+	 * @private
+	 * @param {String} string - The string to escape
+	 * @returns {String} - The escaped string
+	 */
+	function escapeRegExp(string) {
+		return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+	}
+
 	function Owl(element, options) {
 
 		/**
@@ -37,6 +47,19 @@
 		 * @public
 		 */
 		this.options = $.extend({}, Owl.Defaults, options);
+
+		// Validate responsiveClass option to prevent ReDoS
+		if (this.options.responsiveClass) {
+			if (typeof this.options.responsiveClass !== 'string') {
+				throw new Error('responsiveClass must be a string');
+			}
+			if (this.options.responsiveClass.length > 50) {  // reasonable max length for a class name
+				throw new Error('responsiveClass is too long');
+			}
+			if (!/^[a-zA-Z0-9_-]+$/.test(this.options.responsiveClass)) {
+				throw new Error('responsiveClass contains invalid characters');
+			}
+		}
 
 		/**
 		 * Plugin element.
@@ -579,7 +602,7 @@
 			// responsive class
 			if (settings.responsiveClass) {
 				this.$element.attr('class',
-					this.$element.attr('class').replace(new RegExp('(' + this.options.responsiveClass + '-)\\S+\\s', 'g'), '$1' + match)
+					this.$element.attr('class').replace(new RegExp('(' + escapeRegExp(this.options.responsiveClass) + '-)\\S+\\s', 'g'), '$1' + match)
 				);
 			}
 		}
@@ -1479,7 +1502,8 @@
 			.removeClass(this.options.rtlClass)
 			.removeClass(this.options.dragClass)
 			.removeClass(this.options.grabClass)
-			.attr('class', this.$element.attr('class').replace(new RegExp(this.options.responsiveClass + '-\\S+\\s', 'g'), ''))
+			// Safely replace responsive classes using properly escaped RegExp
+			.attr('class', this.$element.attr('class').replace(new RegExp(escapeRegExp(this.options.responsiveClass) + '-\\S+\\s', 'g'), ''))
 			.removeData('owl.carousel');
 	};
 

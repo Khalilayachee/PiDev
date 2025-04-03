@@ -2734,16 +2734,17 @@ var menu = $.widget( "ui.menu", {
 	},
 
 	_filterMenuItems: function(character) {
-		var escapedCharacter = character.replace( /[\-\[\]{}()*+?.,\\\^$|#\s]/g, "\\$&" ),
-			regex = new RegExp( "^" + escapedCharacter, "i" );
-
+		// Input validation using a whitelist of allowed characters
+		if (!/^[a-zA-Z0-9\s\-_]+$/.test(character)) {
+			return $(); // Return empty jQuery set if invalid characters
+		}
+		
 		return this.activeMenu
 			.find( this.options.items )
-
 			// Only match on items, not dividers or other content (#10571)
 			.filter( ".ui-menu-item" )
 			.filter(function() {
-				return regex.test( $.trim( $( this ).text() ) );
+				return $(this).text().toLowerCase().indexOf(character.toLowerCase()) === 0;
 			});
 	}
 });
@@ -3318,10 +3319,13 @@ $.widget( "ui.autocomplete", {
 
 $.extend( $.ui.autocomplete, {
 	escapeRegex: function( value ) {
-		return value.replace( /[\-\[\]{}()*+?.,\\\^$|#\s]/g, "\\$&" );
+		// Use a simple, safe pattern that escapes all special regex characters
+		return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 	},
 	filter: function( array, term ) {
-		var matcher = new RegExp( $.ui.autocomplete.escapeRegex( term ), "i" );
+		// Create RegExp that matches the literal text, safer against ReDoS
+		var escapedTerm = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+		var matcher = new RegExp(escapedTerm, "i");
 		return $.grep( array, function( value ) {
 			return matcher.test( value.label || value.value || value );
 		});
@@ -4890,7 +4894,11 @@ $.extend(Datepicker.prototype, {
 					size = (match === "@" ? 14 : (match === "!" ? 20 :
 					(match === "y" && isDoubled ? 4 : (match === "o" ? 3 : 2)))),
 					minSize = (match === "y" ? size : 1),
-					digits = new RegExp("^\\d{" + minSize + "," + size + "}"),
+					// Validate size parameters before RegExp construction to prevent ReDoS
+					maxAllowedSize = 20,
+					validatedSize = Math.min(size, maxAllowedSize),
+					validatedMinSize = Math.min(minSize, validatedSize),
+					digits = new RegExp("^\\d{" + validatedMinSize + "," + validatedSize + "}"),
 					num = value.substring(iValue).match(digits);
 				if (!num) {
 					throw "Missing number at position " + iValue;
